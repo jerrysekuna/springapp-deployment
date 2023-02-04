@@ -84,5 +84,4 @@ kops update cluster ${NAME} --yes
 
 ```
 kops validate cluster
-```# springapp-deployment
-# springapp-deployment
+```
