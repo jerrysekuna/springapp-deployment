@@ -78,6 +78,8 @@ Add environment variables in bashrc:
 vi .bashrc 
 export NAME=mydeploy.k8s.local
 export KOPS_STATE_STORE=s3://carasekuna.k8s.local
+```
+```
 source .bashrc
 ```
  # Step 6. Create sshkeys before creating cluster
@@ -102,10 +104,10 @@ kops delete cluster --name=${NAME} --state=${KOPS_STATE_STORE} --yes
 ```
 kops update cluster ${NAME} --yes
 ```
-*** Take note of the suggested commands prompted on the terminal, you may have to wait 10 mins for the infrastructure to be fully provisioned ***
 ```
 kops validate cluster 
 ```
+*** Take note of the suggested commands prompted on the terminal, you may have to wait 10 mins for the infrastructure to be fully provisioned ***
 # Step 9. Access the application using AWS Elastic Load Balancer 
 ```
 kubectl get all
