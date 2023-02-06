@@ -108,7 +108,7 @@ kops update cluster ${NAME} --yes
 kops validate cluster 
 ```
 *** Take note of the suggested commands prompted on the terminal, you may have to wait 10 mins for the infrastructure to be fully provisioned ***
-# Step 9. Access the application using AWS Elastic Load Balancer 
-```
-kubectl get all
-```
+# Step 9. Access the application using AWS Elastic Load Balancer
+
+Map the endpoint of the load balancer using route 53 service in AWS and create A record to allow endusers to easily access the application.
+
