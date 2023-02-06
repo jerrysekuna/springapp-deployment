@@ -2,7 +2,7 @@
 
 This application has been developed by developer using the spring-boot java framework and deployed with a MongoDB database integrating Jenkins, Docker and K8s. 
 
-This application has 3 different tiers;
+The application has 3 different tiers;
 
 - LOAD BALANCER Tier where endusers' traffic is routed to the application.
 - APPLICATION Tier where endusers' traffic is received.
