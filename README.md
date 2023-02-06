@@ -8,23 +8,20 @@ APPLICATION tier the recieves enduser traffic.
 DATABASE tier that stores data from the application.
 ```
 # Build Project using Maven
-Maven is a java based build tool used to generate executable packages(jar, war, ear) for
-java based projects. The jenkinsfile performs a maven build with the command
+Maven is a java based build tool used to generate executable packages(jar, war, ear) for java based projects. The jenkinsfile performs a maven build with the command.
 ```
 mvn clean package
 ```
-Since we have Docker installed in the same server as Jenkins, we can add Jenkins user to
-Docker group and build docker images by passing the docker build command in the jenkinsfile.
+Since we have Docker installed in the same server as Jenkins, we can add Jenkins user to Docker group and build docker images by passing the docker build command in the jenkinsfile.
 ```
 docker build -t sekuns203/springapp .
 ```
-We can equally deploy the docker images via the Jenkins server by installing Kubectl
-and running the the following command in the jenkinsfile
+We can equally deploy the docker images via the Jenkins server by installing Kubectl and running the the following command in the jenkinsfile.
 ```
 kubectl apply -f springapp
 ```
-
- # Multi-tier Infrastructure setup with AWS
+ 
+# Multi-tier Infrastructure setup with AWS
  
 # Step 1. Install and configure Docker and Jenkins on ubuntu 18 or higher
 ```
