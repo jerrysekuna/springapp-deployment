@@ -2,9 +2,9 @@
 
 This application has been developed by developer using a spring-boot java framework, the application needs a MongoDB database and I have used Jenkins, Docker and K8s for this project. This application has 3 different tiers;
 
-LOAD BALANCER Tier where endusers' traffic is routed to the application.
-APPLICATION Tier where endusers' traffic is received.
-DATABASE Tier that stores data from the application.
+- LOAD BALANCER Tier where endusers' traffic is routed to the application.
+- APPLICATION Tier where endusers' traffic is received.
+- DATABASE Tier that stores data from the application.
 
 # Build project using Maven
 Maven is a java based build tool used to generate executable packages(jar, war, ear) for java based projects. The jenkinsfile performs a maven build with the command.
