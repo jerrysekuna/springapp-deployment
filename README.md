@@ -1,5 +1,13 @@
 # Multi-tier App Deployment with Jenkins Docker and Kubernetes Integration
 
+This application has been developed by developer using a spring-boot java framework, the application needs a MongoDB database and I have used Jenkins, Docker and K8s for this project.
+
+```This application has 3 different tiers
+Load balancer tier where endusers traffic is routed to the application
+Application tier the recieves enduser traffic
+Database tier that stores data from the application
+```
+
  # Install and configure Docker on ubuntu 18 or higher in AWS
 ```
 sudo apt install docker.io -y
