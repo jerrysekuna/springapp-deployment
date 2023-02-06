@@ -1,6 +1,6 @@
 # Multi-tier App Deployment with Jenkins Docker and Kubernetes Integration
 
-This application has been developed by developer using the spring-boot java framework, the application needs a MongoDB database and we have used Jenkins, Docker and K8s for this project. 
+The application has been developed by developer using the spring-boot java framework, deployed with a MongoDB database integrating Jenkins, Docker and K8s. 
 
 This application has 3 different tiers;
 
