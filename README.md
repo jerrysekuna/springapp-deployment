@@ -7,12 +7,12 @@ LOAD BALANCER tier where endusers' traffic is routed to the application.
 APPLICATION tier the recieves enduser traffic.
 DATABASE tier that stores data from the application.
 ```
-# Build Project using Maven
+# Build project using Maven
 Maven is a java based build tool used to generate executable packages(jar, war, ear) for java based projects. The jenkinsfile performs a maven build with the command.
 ```
 mvn clean package
 ```
-Since we have Docker installed in the same server as Jenkins, we can add Jenkins user to Docker group and build docker images by passing the docker build command in the jenkinsfile.
+Since we have Docker installed in the same server as Jenkins, we can add Jenkins user to the Docker group and build docker images by running the docker build command in the jenkinsfile.
 ```
 docker build -t sekuns203/springapp .
 ```
@@ -20,6 +20,7 @@ We can equally deploy the docker images via the Jenkins server by installing Kub
 ```
 kubectl apply -f springapp
 ```
+*** take a look at the jenkinfile in this repo ***
  
 # Multi-tier Infrastructure setup with AWS
  
@@ -76,6 +77,7 @@ Add environment variables in bashrc:
 vi .bashrc 
 export NAME=mydeploy.k8s.local
 export KOPS_STATE_STORE=s3://carasekuna.k8s.local
+source .bashrc
 ```
  # Step 6. Create sshkeys before creating cluster
 ```
@@ -99,8 +101,7 @@ kops delete cluster --name=${NAME} --state=${KOPS_STATE_STORE} --yes
 ```
 kops update cluster ${NAME} --yes
 ```
-*** Take note of the suggested commands prompted on the terminal ***
-*** You may have to wait 10 mins for the infrastructure to be fully provisioned ***
+*** Take note of the suggested commands prompted on the terminal, you may have to wait 10 mins for the infrastructure to be fully provisioned ***
 ```
 kops validate cluster 
 ```
