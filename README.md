@@ -7,15 +7,32 @@ LOAD BALANCER tier where endusers' traffic is routed to the application.
 APPLICATION tier the recieves enduser traffic.
 DATABASE tier that stores data from the application.
 ```
+# Build Project using Maven
+Maven is a java based build tool used to generate executable packages(jar, war, ear) for
+java based projects. The jenkinsfile performs a maven build with the command
+```
+mvn clean package
+```
+Since we have Docker installed in the same server as Jenkins, we can add Jenkins user to
+Docker group and build docker images by passing the docker build command in the jenkinsfile.
+```
+docker build -t sekuns203/springapp .
+```
+We can equally deploy the docker images via the Jenkins server by installing Kubectl
+and running the the following command in the jenkinsfile
+```
+kubectl apply -f springapp
+```
 
- # Install and configure Docker on ubuntu 18 or higher in AWS
+ # Multi-tier Infrastructure setup with AWS
+ 
+# Step 1. Install and configure Docker and Jenkins on ubuntu 18 or higher
 ```
 sudo apt install docker.io -y
 sudo systemctl restart docker
 sudo systemctl enable docker.service
 ```
-
- # Install, start and configure Jenkins same ubuntu instance
+Jenkins installation
 ```
 sudo wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add - 
 sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \/etc/apt/sources.list.d/jenkins.list'
@@ -25,24 +42,23 @@ sudo usermod -aG docker jenkins
 systemctl enable docker.service
 sudo echo "jenkins ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
 ```
-
  *** setup Kubernetes cluster on AWS using KOPS ***
 
- # Install KOPS software on Ubuntu instance
+ # Step 2. Install KOPS software on Ubuntu instance
 ```
 sudo curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
 chmod +x kops-linux-amd64 
 sudo mv kops-linux-amd64 /usr/local/bin/kops
 ```
 
- # Install Kubectl
+ # Step 3. Install Kubectl
 ```
 sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo chmod +x ./kubectl
 sudo mv kubectl /usr/local/bin/ 
 ```
 
- # Create an IAM role from AWS Console OR CLI with below policies
+ # Step 4. Create an IAM role from AWS Console OR CLI with below policies
 ```
 AmazonEC2FullAccess
 AmazonRoute53FullAccess
@@ -53,43 +69,45 @@ AmazonSQSFullAccess
 AmazonEventBridgeFullAccess
 ```
 
- # Create S3 bucket 
+ # Step 5. Create S3 bucket and add environment variables in bashrc
 ```
 aws s3 mb s3://<mybucket>
 example: aws s3 mb s3://carasekuna.k8s.local
 ```
-
- # Add environment variables in bashrc:
-
+Add environment variables in bashrc:
 ```
 vi .bashrc 
 export NAME=mydeploy.k8s.local
 export KOPS_STATE_STORE=s3://carasekuna.k8s.local
 ```
- # Create sshkeys before creating cluster
+ # Step 6. Create sshkeys before creating cluster
 ```
 ssh-keygen 
 ```
- # Create Kubernetes cluster definitions on S3 bucket
+ # Step 7. Create Kubernetes cluster definitions on S3 bucket
 ```
 kops create cluster --zones us-east-2a --networking cilium --master-size t2.medium --master-count 1 --node-size t2.medium --node-count=2 ${NAME}
 
 kops create secret --name ${NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 ```
-``` To list nodes
+To list nodes
+``` 
 kubectl get nodes
 ```
-
-``` To delete cluster
+To delete cluster
+``` 
 kops delete cluster --name=${NAME} --state=${KOPS_STATE_STORE} --yes
 ```
-
- # Create Kubernetes cluster
+ # Step 8. Create Kubernetes cluster
 ```
 kops update cluster ${NAME} --yes
 ```
 *** Take note of the suggested commands prompted on the terminal ***
-
+*** You may have to wait 10 mins for the infrastructure to be fully provisioned ***
 ```
-kops validate cluster
+kops validate cluster 
+```
+# Step 9. Access the application using AWS Elastic Load Balancer 
+```
+kubectl get all
 ```
