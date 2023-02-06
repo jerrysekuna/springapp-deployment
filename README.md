@@ -6,7 +6,7 @@ This application has 3 different tiers;
 
 - LOAD BALANCER Tier where endusers' traffic is routed to the application.
 - APPLICATION Tier where endusers' traffic is received.
-- DATABASE Tier that stores data from the application.
+- DATABASE Tier where enduser's data from the application.
 
 # Build project using Maven
 Maven is a java based build tool used to generate executable packages(jar, war, ear) for java based projects. The jenkinsfile performs a maven build with the command.
