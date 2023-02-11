@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springappdeployment
+spec:
+  selector:
+    matchLabels:
+      app: springapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springappcontainer
+        image: sekuns203/spring-boot-app
+        ports:
+        - containerPort: 8080
+        
